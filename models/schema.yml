@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: stg_intakes
+    description: One row per intake event; exact duplicates (same animal, same minute) removed.
+    columns:
+      - name: intake_id
+        data_tests: [unique, not_null]
+      - name: animal_id
+        data_tests: [not_null]
+      - name: intake_dt
+        data_tests: [not_null]
+      - name: region_type
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["City of Austin", "Rest of Travis County", "Outside jurisdiction"]
+      - name: custody_group
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["Public assist", "Stray hold", "Owner surrender", "Other"]
+
+  - name: stg_outcomes
+    description: One row per outcome event.
+    columns:
+      - name: outcome_id
+        data_tests: [unique, not_null]
+
+  - name: fct_stays
+    description: One row per stay (intake), with the outcome that closed it.
+    columns:
+      - name: stay_id
+        data_tests:
+          - unique
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_intakes')
+                field: intake_id
+      - name: outcome_id
+        description: Each outcome closes at most one stay.
+        data_tests:
+          - unique
+      - name: days_in_care
+        data_tests:
+          - non_negative

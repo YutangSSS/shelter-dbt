@@ -1,0 +1,9 @@
+[project]
+name = "shelter-dbt"
+version = "0.1.0"
+description = "Shelter intakes and outcomes modelled in dbt on DuckDB, with data tests."
+requires-python = ">=3.11"
+dependencies = ["dbt-duckdb>=1.11.1"]
+
+[tool.uv]
+package = false

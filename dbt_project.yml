@@ -1,0 +1,17 @@
+name: shelter_reporting
+version: "1.0.0"
+config-version: 2
+profile: shelter_reporting
+model-paths: ["models"]
+test-paths: ["tests"]
+target-path: "target"
+clean-targets: ["target"]
+vars:
+  data_dir: "data"
+  long_open_days: 180
+models:
+  shelter_reporting:
+    staging:
+      +materialized: table
+    marts:
+      +materialized: table

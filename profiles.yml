@@ -1,0 +1,7 @@
+shelter_reporting:
+  target: local
+  outputs:
+    local:
+      type: duckdb
+      path: "target/shelter.duckdb"
+      threads: 4
